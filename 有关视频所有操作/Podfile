@@ -1,0 +1,11 @@
+platform :ios, '8.0'
+use_frameworks!
+target 'VideoTest2' do
+pod 'Alamofire', '~> 3.4.1'
+pod 'SDWebImage','~>3.8se.1'
+pod 'Masonry','~>1.0.1'
+pod 'ZFDownload','~>1.0.1'
+pod 'AFNetworking','~>3.1.0'
+pod 'MJExtension','~>3.0.13'
+pod 'FDFullscreenPopGesture'
+end
