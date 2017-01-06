@@ -21,7 +21,7 @@
     
     // 代码添加playerBtn到imageView上
     self.playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playBtn.backgroundColor = [UIColor brownColor];
+//    self.playBtn.backgroundColor = [UIColor brownColor];
     [self.playBtn setImage:[UIImage imageNamed:@"video_list_cell_big_icon"] forState:UIControlStateNormal];
     [self.playBtn addTarget:self action:@selector(playBtnclik:) forControlEvents:UIControlEventTouchUpInside];
     [self.picView addSubview:self.playBtn];

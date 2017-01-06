@@ -15,8 +15,8 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     //需要研究一下这个方法的
     typealias PropertyChangeBlock = ((AVCaptureDevice)->())?
     
-    let IPhoneWidth = UIScreen.mainScreen().bounds.width
-    let IPhoneHeight = UIScreen.mainScreen().bounds.height
+    let IPhoneWidth = UIScreen.main.bounds.width
+    let IPhoneHeight = UIScreen.main.bounds.height
     
     //负责输入和输出设备之间的数据传递
     var captureSession:AVCaptureSession?
@@ -55,31 +55,31 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         
         isRunning = false
         
-          let rect =  CGRectMake(0, 0, 28, 28)
+          let rect =  CGRect(x: 0, y: 0, width: 28, height: 28)
         let pickPhotoesBtn = UIButton(frame: rect)
-        pickPhotoesBtn.tintColor = UIColor.whiteColor()
-        pickPhotoesBtn.setTitle("取消", forState: .Normal)
+        pickPhotoesBtn.tintColor = UIColor.white
+        pickPhotoesBtn.setTitle("取消", for: UIControlState())
         
-        pickPhotoesBtn.addTarget(self, action:#selector(TakeAfilm().cancleVC), forControlEvents: .TouchUpInside)
+        pickPhotoesBtn.addTarget(self, action:#selector(TakeAfilm().cancleVC), for: .touchUpInside)
         let barLeftBtnItem = UIBarButtonItem(customView: pickPhotoesBtn)
      
         self.navigationItem.rightBarButtonItem = barLeftBtnItem
         
         
-        viewContainer = UIView(frame: CGRectMake(0,0,IPhoneWidth,IPhoneHeight-40))
-        viewContainer?.backgroundColor = UIColor.brownColor()
+        viewContainer = UIView(frame: CGRect(x: 0,y: 0,width: IPhoneWidth,height: IPhoneHeight-40))
+        viewContainer?.backgroundColor = UIColor.brown
         self.view.addSubview(viewContainer!)
         
-        takeButton = UIButton(type: .Custom)
-        takeButton?.frame = CGRectMake(200, IPhoneHeight-40, 100, 20)
+        takeButton = UIButton(type: .custom)
+        takeButton?.frame = CGRect(x: 200, y: IPhoneHeight-40, width: 100, height: 20)
         takeButton?.center = (viewContainer?.center)!
-        takeButton?.backgroundColor = UIColor.orangeColor()
-        takeButton?.setTitle("录制", forState: .Normal)
-        takeButton?.addTarget(self, action: #selector(TakeAfilm.takeButtonClick(_:)), forControlEvents: .TouchUpInside)
+        takeButton?.backgroundColor = UIColor.orange
+        takeButton?.setTitle("录制", for: UIControlState())
+        takeButton?.addTarget(self, action: #selector(TakeAfilm.takeButtonClick(_:)), for: .touchUpInside)
         self.view.addSubview(takeButton!)
         
         
-        focusCursor = UIImageView(frame: CGRectMake(200, 200, 40, 40))
+        focusCursor = UIImageView(frame: CGRect(x: 200, y: 200, width: 40, height: 40))
         focusCursor?.image = UIImage(named: "5951.png")
         
         
@@ -103,7 +103,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
 //        初始化会话
@@ -115,7 +115,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         }
         
 //        获得输入设备，取得后置摄像头
-        let captureDevice = self.getCameraDeviceWithPosition(AVCaptureDevicePosition.Back)
+        let captureDevice = self.getCameraDeviceWithPosition(AVCaptureDevicePosition.back)
 //        默认获取成功了
 //        if captureDevice.{
 //            print("\(#line)=======获取后摄像头失败=====")
@@ -123,7 +123,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
 //        }
 //        
         //添加一个音频输入设备
-        let audioCaptureDevice = AVCaptureDevice.devicesWithMediaType(AVMediaTypeAudio)[0]
+        let audioCaptureDevice = AVCaptureDevice.devices(withMediaType: AVMediaTypeAudio)[0]
         
 //        根据输入设备初始化输入对象，用于获得输入数据
         captureDeviceInput = try? AVCaptureDeviceInput(device: captureDevice)
@@ -138,9 +138,9 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         if ((captureSession?.canAddInput(captureDeviceInput)) != nil) {
             captureSession?.addInput(captureDeviceInput)
             captureSession?.addInput(audioCaptureDeviceInput)
-            let captureConnection = captureMovieFileOutput?.connectionWithMediaType(AVMediaTypeVideo)
-            if ((captureConnection?.supportsVideoStabilization) != nil) {
-                captureConnection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.Auto
+            let captureConnection = captureMovieFileOutput?.connection(withMediaType: AVMediaTypeVideo)
+            if ((captureConnection?.isVideoStabilizationSupported) != nil) {
+                captureConnection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.auto
                 
             }
             
@@ -166,46 +166,46 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         
     }
  
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.captureSession?.startRunning()
         
         
         
     }
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
      
         
 
     }
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return self.enableRotation!
     }
     
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         let captureConnection = self.captureVideoPreviewLayer?.connection
       
 
         switch toInterfaceOrientation {
-        case .Portrait:
-            captureConnection?.videoOrientation = .Portrait
-        case .PortraitUpsideDown:
-            captureConnection?.videoOrientation = .PortraitUpsideDown
-        case .LandscapeRight:
-            captureConnection?.videoOrientation = .LandscapeRight
+        case .portrait:
+            captureConnection?.videoOrientation = .portrait
+        case .portraitUpsideDown:
+            captureConnection?.videoOrientation = .portraitUpsideDown
+        case .landscapeRight:
+            captureConnection?.videoOrientation = .landscapeRight
  
         default:
             
-            captureConnection?.videoOrientation = .LandscapeLeft
+            captureConnection?.videoOrientation = .landscapeLeft
         }
 
         
         
     }
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         captureVideoPreviewLayer?.frame = (self.viewContainer?.bounds)!
         
     }
@@ -219,24 +219,24 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     }
     
    
-    func addNotificationToCaptureSession(captureSession:AVCaptureSession)
+    func addNotificationToCaptureSession(_ captureSession:AVCaptureSession)
     {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(TakeAfilm.sessionRuntimeError(_:)), name: AVCaptureSessionRuntimeErrorNotification, object: captureSession)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(TakeAfilm.sessionRuntimeError(_:)), name: NSNotification.Name.AVCaptureSessionRuntimeError, object: captureSession)
         
     }
     
     // 给输入设备添加通知
-    func addNotificationToCaptureDevice(captureDevice:AVCaptureDevice)
+    func addNotificationToCaptureDevice(_ captureDevice:AVCaptureDevice)
     {
         
         self.changeDeviceProperty{ (captureDevice) in
         
-          captureDevice.subjectAreaChangeMonitoringEnabled = true
+          captureDevice.isSubjectAreaChangeMonitoringEnabled = true
         }
 
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(TakeAfilm().areaChange), name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: captureDevice)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(TakeAfilm().areaChange), name: NSNotification.Name.AVCaptureDeviceSubjectAreaDidChange, object: captureDevice)
         
         
         
@@ -244,36 +244,36 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     }
     func removeNotification()
     {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
         
     }
     
-    func  sessionRuntimeError(notification:NSNotification)
+    func  sessionRuntimeError(_ notification:Notification)
     {
         print("\(#line)=======会话发生错误=====")
         
     }
     
-    func tapScreen(tapGesture:UITapGestureRecognizer)
+    func tapScreen(_ tapGesture:UITapGestureRecognizer)
     {
-        let point = tapGesture.locationInView(self.viewContainer)
-        let cameraPoint = self.captureVideoPreviewLayer?.captureDevicePointOfInterestForPoint(point)
+        let point = tapGesture.location(in: self.viewContainer)
+        let cameraPoint = self.captureVideoPreviewLayer?.captureDevicePointOfInterest(for: point)
         self.setFocusCursorWithPoint(point)
-        self.focusWithMode(AVCaptureFocusMode.AutoFocus, exposureMode: AVCaptureExposureMode.AutoExpose, point: cameraPoint!)
+        self.focusWithMode(AVCaptureFocusMode.autoFocus, exposureMode: AVCaptureExposureMode.autoExpose, point: cameraPoint!)
         
     }
     
-    func setFocusCursorWithPoint(point:CGPoint)
+    func setFocusCursorWithPoint(_ point:CGPoint)
     {
         self.focusCursor?.center = point
-        self.focusCursor?.transform = CGAffineTransformMakeScale(1.5, 1.5)
+        self.focusCursor?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         self.focusCursor?.alpha = 1.0
-        UIView.animateWithDuration(1.0, animations: {
-            self.focusCursor?.transform = CGAffineTransformIdentity
-            }) { (finish) in
+        UIView.animate(withDuration: 1.0, animations: {
+            self.focusCursor?.transform = CGAffineTransform.identity
+            }, completion: { (finish) in
                 self.focusCursor?.alpha = 0
-        }
+        }) 
 
         
     }
@@ -282,12 +282,12 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         print("\(#line)=======捕获区域改变====")
     }
     
-    func getCameraDeviceWithPosition(position:AVCaptureDevicePosition)->AVCaptureDevice
+    func getCameraDeviceWithPosition(_ position:AVCaptureDevicePosition)->AVCaptureDevice
     {
         
-       let camerasArr =  AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-        for camera in camerasArr {
-            if camera.position == position {
+       let camerasArr =  AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo)
+        for camera in camerasArr! {
+            if (camera as AnyObject).position == position {
                 return camera as! AVCaptureDevice
             }
         }
@@ -296,7 +296,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
      
    
     }
-    func takeButtonClick(sender:UIButton)
+    func takeButtonClick(_ sender:UIButton)
     {
        
         
@@ -318,20 +318,20 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         }
         
 //        根据设备输出获得链接
-        let captureConnection = self.captureMovieFileOutput?.connectionWithMediaType(AVMediaTypeVideo)
-        if (self.captureMovieFileOutput?.recording == true) {
+        let captureConnection = self.captureMovieFileOutput?.connection(withMediaType: AVMediaTypeVideo)
+        if (self.captureMovieFileOutput?.isRecording == true) {
             self.enableRotation = false
-            if UIDevice.currentDevice().multitaskingSupported
+            if UIDevice.current.isMultitaskingSupported
             {
-                self.backgroundTaskIdentifer = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
+                self.backgroundTaskIdentifer = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
                 
             }
             
             captureConnection?.videoOrientation = (self.captureVideoPreviewLayer?.connection.videoOrientation)!
-            let outputFielPath = NSTemporaryDirectory().stringByAppendingString("myMovie.mov")
+            let outputFielPath = NSTemporaryDirectory() + "myMovie.mov"
             print("存储的路径是\(outputFielPath)")
-            let fielUrl = NSURL(fileURLWithPath: outputFielPath)
-            self.captureMovieFileOutput?.startRecordingToOutputFileURL(fielUrl, recordingDelegate: self)
+            let fielUrl = URL(fileURLWithPath: outputFielPath)
+            self.captureMovieFileOutput?.startRecording(toOutputFileURL: fielUrl, recordingDelegate: self)
           
             
             
@@ -342,17 +342,17 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         }
     }
     
-    func toggleButtonClick(sender:UIButton)
+    func toggleButtonClick(_ sender:UIButton)
     {
         let currentDevice = self.captureDeviceInput?.device
         let currentPosition = currentDevice?.position
         self.removeNotificationFromCaptureSession(currentDevice!)
         
         
-        var toChangePosition = AVCaptureDevicePosition.Front
-        if currentPosition==AVCaptureDevicePosition.Unspecified||currentPosition == AVCaptureDevicePosition.Front {
+        var toChangePosition = AVCaptureDevicePosition.front
+        if currentPosition==AVCaptureDevicePosition.unspecified||currentPosition == AVCaptureDevicePosition.front {
             
-            toChangePosition = AVCaptureDevicePosition.Back
+            toChangePosition = AVCaptureDevicePosition.back
         }
         
         let toChangeDevice = self.getCameraDeviceWithPosition(toChangePosition)
@@ -382,26 +382,26 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     //视频输出代理
     
     
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
+    func capture(_ captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAt fileURL: URL!, fromConnections connections: [Any]!) {
         print("\(#line)=======开始录制=====")
     }
 
     
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+    func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
         print("\(#line)=======录制完成=====")
         
         self.enableRotation = true
         let lastBackgroundTaskIdentifier = self.backgroundTaskIdentifer
         self.backgroundTaskIdentifer = UIBackgroundTaskInvalid
         let assetsLibrary = ALAssetsLibrary()
-        assetsLibrary.writeVideoAtPathToSavedPhotosAlbum(outputFileURL) { (let assetUrl, let error) in
+        assetsLibrary.writeVideoAtPath(toSavedPhotosAlbum: outputFileURL) { (assetUrl, error) in
             if error != nil
             {
-                print("\(#line)=======保存视频到相册过程中发生错误，错误的信息为=====\(error.localizedDescription)")
+                print("\(#line)=======保存视频到相册过程中发生错误，错误的信息为=====\(error?.localizedDescription)")
             }
             if lastBackgroundTaskIdentifier != UIBackgroundTaskInvalid
             {
-                UIApplication.sharedApplication().endBackgroundTask(lastBackgroundTaskIdentifier!)
+                UIApplication.shared.endBackgroundTask(lastBackgroundTaskIdentifier!)
                 print("\(#line)=======成功的保存到视频相册=====")
                 
                 
@@ -410,17 +410,17 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
 
     }
 
-    func deviceConnected(notification:NSNotification)
+    func deviceConnected(_ notification:Notification)
     {
         print("\(#line)=======设备已连接=====")
     }
  
-    func deviceDisconnected(notification:NSNotification)
+    func deviceDisconnected(_ notification:Notification)
     {
         print("\(#line)=======设备已经断开=====")
     }
     
-    func changeDeviceProperty(propertyChange:PropertyChangeBlock)
+    func changeDeviceProperty(_ propertyChange:PropertyChangeBlock)
     {
         let captureDevice = self.captureDeviceInput?.device
     
@@ -434,7 +434,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
     }
     
     //闪光灯模式
-    func setFlashMode(flashMode:AVCaptureFlashMode)
+    func setFlashMode(_ flashMode:AVCaptureFlashMode)
     {
         self.changeDeviceProperty { (captureDevice) in
             if(captureDevice.isFlashModeSupported(flashMode))
@@ -445,7 +445,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         }
     }
     //聚焦模式
-    func setFocusMode(focusMode:AVCaptureFocusMode)
+    func setFocusMode(_ focusMode:AVCaptureFocusMode)
     {
         self.changeDeviceProperty { (captureDevice) in
             if(captureDevice.isFocusModeSupported(focusMode))
@@ -456,7 +456,7 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         }
     }
 //    曝光模式
-    func setExposureMode(exposureMode:AVCaptureExposureMode)
+    func setExposureMode(_ exposureMode:AVCaptureExposureMode)
     {
         self.changeDeviceProperty { (captureDevice) in
             if(captureDevice.isExposureModeSupported(exposureMode))
@@ -468,22 +468,22 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
         
     }
     
-    func focusWithMode(focusMode:AVCaptureFocusMode,exposureMode:AVCaptureExposureMode,point:CGPoint)
+    func focusWithMode(_ focusMode:AVCaptureFocusMode,exposureMode:AVCaptureExposureMode,point:CGPoint)
     {
         self.changeDeviceProperty { (captureDevice) in
             if(captureDevice.isFocusModeSupported(focusMode))
             {
-                captureDevice.focusMode = AVCaptureFocusMode.AutoFocus
+                captureDevice.focusMode = AVCaptureFocusMode.autoFocus
             }
-            if(captureDevice.focusPointOfInterestSupported)
+            if(captureDevice.isFocusPointOfInterestSupported)
             {
                 captureDevice.focusPointOfInterest = point
             }
             if(captureDevice.isExposureModeSupported(exposureMode))
             {
-                captureDevice.exposureMode = AVCaptureExposureMode.AutoExpose
+                captureDevice.exposureMode = AVCaptureExposureMode.autoExpose
             }
-            if(captureDevice.exposurePointOfInterestSupported)
+            if(captureDevice.isExposurePointOfInterestSupported)
             {
                 captureDevice.exposurePointOfInterest = point
             }
@@ -500,10 +500,10 @@ class TakeAfilm: UIViewController,AVCaptureFileOutputRecordingDelegate
 //        }
 //        
 //    }
-    func removeNotificationFromCaptureSession(captureDevice:AVCaptureDevice)
+    func removeNotificationFromCaptureSession(_ captureDevice:AVCaptureDevice)
     {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.removeObserver(self, name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: captureDevice)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self, name: NSNotification.Name.AVCaptureDeviceSubjectAreaDidChange, object: captureDevice)
         
     }
     

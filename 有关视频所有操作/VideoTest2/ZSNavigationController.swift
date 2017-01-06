@@ -12,7 +12,7 @@ class ZSNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        self.navigationBar.barStyle = UIBarStyle.blackTranslucent
    
 //        self.navigationBar.tintColor = UIColor.purpleColor()
     }

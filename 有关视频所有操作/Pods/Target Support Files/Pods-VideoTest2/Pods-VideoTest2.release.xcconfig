@@ -1,9 +1,11 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/Alamofire" "$PODS_CONFIGURATION_BUILD_DIR/FDFullscreenPopGesture" "$PODS_CONFIGURATION_BUILD_DIR/MJExtension" "$PODS_CONFIGURATION_BUILD_DIR/Masonry" "$PODS_CONFIGURATION_BUILD_DIR/SDWebImage"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/AFNetworking.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ASIHTTPRequest.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Alamofire.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/FDFullscreenPopGesture.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/MJExtension.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Masonry.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Reachability.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SDWebImage.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/ZFDownload.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "ASIHTTPRequest" -framework "Alamofire" -framework "FDFullscreenPopGesture" -framework "MJExtension" -framework "Masonry" -framework "Reachability" -framework "SDWebImage" -framework "ZFDownload"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Alamofire/Alamofire.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/FDFullscreenPopGesture/FDFullscreenPopGesture.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MJExtension/MJExtension.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Masonry/Masonry.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SDWebImage/SDWebImage.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "Alamofire" -framework "FDFullscreenPopGesture" -framework "MJExtension" -framework "Masonry" -framework "SDWebImage"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
-PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-VideoTest2
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods
